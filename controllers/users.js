@@ -9,8 +9,24 @@ const sendUserCreated = (req, res)=>{
 };
 
 const sendUserById = (req,res)=>{
-  set.setHeader("Content-Type", "application/json");
-  set.end(JSON.stringify(req.user));
+  res.setHeader("Content-Type", "application/json");
+  res.end(JSON.stringify(req.user));
 };
 
-module.exports = {sendAllUsers, sendUserCreated, sendUserById}; 
+const sendUserUpdated = (req,res)=>{
+  res.setHeader("Content-Type", "application/json");
+  res.status(200).end(JSON.stringify({message:"Пользователь обновлен"}));
+};
+
+const sendUserDeleted = (req,res)=>{
+  res.setHeader("Content-Type", "application/json");
+  res.status(200).end(JSON.stringify(req.user));
+};
+
+module.exports = {
+  sendAllUsers, 
+  sendUserCreated, 
+  sendUserById, 
+  sendUserUpdated,
+  sendUserDeleted
+}; 
