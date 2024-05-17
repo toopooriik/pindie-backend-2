@@ -15,15 +15,15 @@ const findCategoryById = async (req,res,next)=>{
   }
 }
 
-const createCategory = async(req, res, next) =>{
+const createCategory = async (req, res, next) => {
   console.log("POST /categories");
-  try{
+  try {
     console.log(req.body);
-    req.category = await req.categories(req.body);
+    req.category = await categories.create(req.body);
     next();
-  } catch (error){
+  } catch (error) {
     res.setHeader("Content-Type", "application/json");
-    res.status(400).send(JSON.stringify({message: "Ошибка создания категории"}));
+    res.status(400).send(JSON.stringify({ message: "Ошибка создания категории" }));
   }
 };
 
@@ -47,10 +47,33 @@ const deleteCategory = async(req,res,next)=>{
   }
 };
 
+const checkIsCategoryExists = async (req, res, next) => {
+  const isInArray = req.categoriesArray.find((category) => {
+    return req.body.name === category.name;
+  });
+  if (isInArray) {
+    res.setHeader("Content-Type", "application/json");
+        res.status(400).send(JSON.stringify({ message: "Категория с таким названием уже существует" }));
+  } else {
+    next();
+  }
+};
+
+const checkEmptyName = async (req, res, next) =>{
+  if(!req.body.name){
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({message:"Заполни все поля"}));
+  } else {
+    next();
+  }
+}
+
 module.exports = {
   findAllCategories, 
   createCategory, 
   findCategoryById, 
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  checkIsCategoryExists,
+  checkEmptyName
 };

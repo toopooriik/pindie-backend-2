@@ -19,7 +19,7 @@ const createUser = async (req, res, next) =>{
   console.log("POST /users")
   try{
     console.log(req.body);
-    req.user = await req.users(req.body);
+    req.user = await users.create(req.body);
     next();
   } catch (error){
     res.setHeader("Content-Type", "application/json");
@@ -27,9 +27,9 @@ const createUser = async (req, res, next) =>{
   }
 };
 
-const updateUser = async(req,res,next)=>{
+const updateUser = async (req, res, next)=>{
   try{
-    req.user = users.findByIdAndUpdate(req.params.id, req.body);
+    req.user = await users.findByIdAndUpdate(req.params.id, req.body);
     next();
   } catch(error){
     res.setHeader("Content-Type", "application/json");
@@ -47,10 +47,30 @@ const deleteUser = async(req,res,next)=>{
   }
 };
 
+const checkEmptyNameAndEmailAndPassword = async(req, res, next) =>{
+  if(!req.body.username || !req.body.email || !req.body.password){
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({message:"Поля заполни быстро"}));
+  } else {
+    next();
+  }
+};
+
+const checkEmptyNameAndEmail = (req, res, next) => {
+  if(!req.body.username || !req.body.email){
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({message:"Почему есть пустота!!!!!????"}));
+  } else{
+    next();
+  }
+}
+
 module.exports = {
   findAllUsers, 
   createUser, 
   findUserById, 
   updateUser,
-  deleteUser
+  deleteUser,
+  checkEmptyNameAndEmailAndPassword,
+  checkEmptyNameAndEmail
 }; 
