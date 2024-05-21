@@ -5,5 +5,15 @@
     "mongodb": "^6.6.1",
     "mongoose": "^8.3.4",
     "node": "^20.13.1"
-  }
+  },
+  "name": "pindie-backend-2",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
