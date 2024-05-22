@@ -1,9 +1,22 @@
 const users = require('../models/user');
+const bcrypt = require("bcryptjs");
 
 const findAllUsers = async (req, res, next) => {
   req.usersArray = await users.find({}, {password: 0 });
   next();
 }
+
+const hashPassword = async (req, res, next) =>{
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.password, salt);
+    req.body.password = hash;
+    next();
+  } catch (error) {
+    res.setHeader("Content-Type", "application/json");
+    res.status(400).send(JSON.stringify({message: "Ошибка хеширования пароля"}));
+  }
+};
 
 const findUserById = async (req,res,next)=>{
   try{
@@ -65,6 +78,19 @@ const checkEmptyNameAndEmail = (req, res, next) => {
   }
 }
 
+const checkIsUserExists = async (req, res, next) => {
+  const isInArray = req.usersArray.find((user) => {
+    return req.body.usersname === user.username;
+  });
+  if (isInArray) {
+    res.setHeader("Content-Type", "application/json");
+        res.status(400).send(JSON.stringify({ message: "Пользователь с таким именем уже существует" }));
+  } else {
+    next();
+  }
+};
+
+
 module.exports = {
   findAllUsers, 
   createUser, 
@@ -72,5 +98,7 @@ module.exports = {
   updateUser,
   deleteUser,
   checkEmptyNameAndEmailAndPassword,
-  checkEmptyNameAndEmail
+  checkEmptyNameAndEmail,
+  hashPassword,
+  checkIsUserExists
 }; 
