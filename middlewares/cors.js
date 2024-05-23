@@ -1,4 +1,4 @@
-const allowedCors = ["https://front-toporik.nomoredomainswork.ru"];
+const allowedCors = ["https://fronttoporik.nomoredomainswork.ru"];
 
 function cors(req, res, next) {
   const { origin } = req.headers;
