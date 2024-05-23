@@ -1,14 +1,5 @@
 const allowedCors = [
-  "https://fronttoporik.nomoredomainswork.ru",
-  "https://fronttoporik.nomoredomainswork.ru/",
-  "https://fronttoporik.nomoredomainswork.ru/**",
-  "https://fronttoporik.nomoredomainswork.ru/games",
-  "https://fronttoporik.nomoredomainswork.ru/games/**",
-  "https://fronttoporik.nomoredomainswork.ru/users",
-  "https://fronttoporik.nomoredomainswork.ru/users/**",
-  "https://fronttoporik.nomoredomainswork.ru/categories",
-  "https://fronttoporik.nomoredomainswork.ru/categories/**",
-  "https://fronttoporik.nomoredomainswork.ru/games/id:"
+  "https://fronttoporik.nomoredomainswork.ru"
 ];
 
 function cors(req, res, next) {
