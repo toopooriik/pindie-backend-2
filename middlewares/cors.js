@@ -1,5 +1,5 @@
 const allowedCors = [
-  "https://fronttoporik.nomoredomainswork.ru/**",
+  "https://fronttoporik.nomoredomainswork.ru/*",
 ];
 
 function cors(req, res, next) {
